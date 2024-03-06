@@ -32,8 +32,9 @@ public class PeopleController {
     public PeopleController(PeopleService service) {
         this.service = service;
     }
+
     @GetMapping()
-    public List<PersonDTO> getAllPeople(){
+    public List<PersonDTO> getAllPeople() {
         List<Person> allPeople = service.getAllPeople();
         List<PersonDTO> result = new ArrayList<>();
         allPeople.forEach(person -> {
@@ -41,16 +42,12 @@ public class PeopleController {
         });
         return result;
     }
+
     @GetMapping("/{id}")
     public PersonDTO getPerson(@PathVariable Long id) throws PersonNotFoundException {
         return service.convertToPersonDTO(service.findById(id));
     }
 
-    @ExceptionHandler({PersonNotFoundException.class})
-    public ResponseEntity<Object> handleException(PersonNotFoundException ex) {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-    }
 
     @PostMapping()
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonDTO personDTO, BindingResult result) {
@@ -65,14 +62,12 @@ public class PeopleController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<HttpStatus> update(@PathVariable("id") Long id,
-                                             @RequestBody  @Valid Person person , BindingResult result) {
+                                             @RequestBody @Valid PersonDTO personDTO, BindingResult result) {
 
         checkErrors(result);
 
-        Person updatedPerson = service.findById(id);
-        service.update(id , updatedPerson);
 
-        service.save(person);
+        service.update(id, personDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -83,8 +78,8 @@ public class PeopleController {
     }
 
 
-    public void checkErrors(BindingResult result){
-        if (result.hasErrors()){
+    public void checkErrors(BindingResult result) {
+        if (result.hasErrors()) {
 
             StringBuilder builder = new StringBuilder();
 
@@ -98,12 +93,5 @@ public class PeopleController {
 
         }
     }
-
-    @ExceptionHandler({PersonNotCreatedException.class})
-    public ResponseEntity<Object> handleException(PersonNotCreatedException ex) {
-        return new ResponseEntity<>(ex.getMessage() , HttpStatus.BAD_REQUEST);
-
-    }
-
 
 }

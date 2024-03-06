@@ -1,10 +1,18 @@
 
 package ru.maxima.springrestapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.maxima.springrestapi.models.Person;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "item")
 public class Order {
@@ -19,47 +27,8 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY) //относится ко многим
     @JoinColumn(name = "person_id", referencedColumnName = "id") // ссылается на id
+    @JsonIgnore
     private Person owner;
-
-    public Order() {
-    }
-
-    public Order(Long id, String name, Person owner) {
-        this.id = id;
-        this.name = name;
-        this.owner = owner;
-    }
-
-
-    public Order(String name, Person owner) {
-        this.name = name;
-        this.owner = owner;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Person getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Person owner) {
-        this.owner = owner;
-    }
-
     @Override
     public String toString() {
         return "Order{" +

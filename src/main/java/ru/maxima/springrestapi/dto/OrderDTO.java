@@ -1,9 +1,12 @@
 package ru.maxima.springrestapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import ru.maxima.springrestapi.models.Person;
 
@@ -15,10 +18,12 @@ import ru.maxima.springrestapi.models.Person;
 @Data
 public class OrderDTO {
 
-    @Column(name = "name")
+
+    @NotEmpty(message = "Name should not to be empty")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY) //относится ко многим
-    @JoinColumn(name = "person_id", referencedColumnName = "id") // ссылается на id
+
+    @JsonIgnore
     private Person owner;
 }
