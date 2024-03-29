@@ -42,6 +42,7 @@ public class PeopleService {
     public void save(Person person) {
         person.setAdmin(false);
         repository.save(person);
+
     }
 
     @Transactional
@@ -57,6 +58,7 @@ public class PeopleService {
     @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
+
     }
 
     @Transactional(readOnly = true)

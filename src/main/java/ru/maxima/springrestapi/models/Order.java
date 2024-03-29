@@ -27,7 +27,6 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY) //относится ко многим
     @JoinColumn(name = "person_id", referencedColumnName = "id") // ссылается на id
-    @JsonIgnore
     private Person owner;
     @Override
     public String toString() {

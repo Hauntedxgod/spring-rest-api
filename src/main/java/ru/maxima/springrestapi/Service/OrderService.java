@@ -59,6 +59,10 @@ public class OrderService {
     public void update(Long id , OrderDTO editOrder) {
         Order order = getIdFromOrders(id);
         order.setName(order.getName());
+        enrichData(order);
+        order.setOwner(order.getOwner());
+    }
+    public void enrichData(Order order){
         order.setOwner(order.getOwner());
     }
 }

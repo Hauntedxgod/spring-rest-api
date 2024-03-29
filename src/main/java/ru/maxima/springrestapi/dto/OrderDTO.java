@@ -24,6 +24,7 @@ public class OrderDTO {
     private String name;
 
 
-    @JsonIgnore
+
+
     private Person owner;
 }
